@@ -73,11 +73,20 @@ SELECT s.first_name, s.last_name, a.address
 FROM staff s LEFT JOIN address a ON s.address_id = a.address_id;
 -- last_update does NOT work for join (in both tables)
 
--- 6b partially works with the dates CHECK
+-- 6b partially works with the dates
 SELECT s.first_name, s.last_name, p.payment_date, SUM(p.amount) AS 'Made'
 FROM staff s LEFT JOIN payment p ON s.staff_id = p.staff_id
 WHERE p.payment_date >= '2005-08-01' and p.payment_date < '2005-09-01'
 GROUP BY s.first_name, s.last_name;
+
+-- also tried:
+-- SELECT s.first_name, s.last_name, DATE_FORMAT(.payment_date, "%M %d %Y"), SUM(p.amount) AS 'Made'
+-- FROM staff s LEFT JOIN payment p ON s.staff_id = p.staff_id
+-- WHERE p.payment_date >= 'August 01 2005' and p.payment_date < 'SEPTEMBER 01 2005'
+-- GROUP BY s.first_name, s.last_name;
+
+
+
 
 -- check dates: select * from payment order by payment_date DESC
 -- check how many staff ids, only two exist: SELECT DISTINCT staff_id from payment;
